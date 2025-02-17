@@ -1,0 +1,3 @@
+Images will be added in assets/ directory while components will be added in components/ directory.
+pages will be added in components/pages/ directory.
+
