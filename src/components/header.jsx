@@ -1,6 +1,7 @@
 export default function Header() {
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-slate-300 shadow-md">
+      {" "}
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         <div className="flex items-center space-x-3">
           <img src="login-logo-small.png" alt="Logo" className="h-10 w-auto" />
