@@ -1,11 +1,21 @@
+import { LayoutContext } from "../context/LayoutContext";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+
 export default function Login() {
+  const { layoutType } = useContext(LayoutContext);
+
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex bg-blue-50 items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-center text-gray-700">User Login</h2>
+        <h2 className="text-2xl font-semibold text-center text-gray-700">
+          {layoutType === "/admin" ? "Admin Login" : "User Login"}
+        </h2>
         <form className="mt-6" id="loginForm">
           <label className="block mb-4">
-            <span className="text-sm text-gray-600">Username (Format: 2022cs0001)</span>
+            <span className="text-sm text-gray-600">
+              Username (Format: 2022cs0001)
+            </span>
             <input
               type="text"
               id="username"
@@ -38,12 +48,7 @@ export default function Login() {
           </button>
         </form>
         <p className="mt-4 text-center">
-          <a
-            href="admin.html"
-            className="text-sm text-red-500 hover:text-red-600 transition duration-300"
-          >
-            Admin Login
-          </a>
+          <Link to="/admin">Admin Login</Link>
         </p>
       </div>
     </div>
