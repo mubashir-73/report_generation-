@@ -1,10 +1,8 @@
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import logo from "../assets/login-logo-small.png";
-import { LayoutContext } from "../context/LayoutContext";
-import { useContext } from "react";
 
-export default function Header() {
-  const { layoutType } = useContext(LayoutContext);
+export default function Header(props) {
   return (
     <nav className="shadow-sm border-b border-gray-200 bg-white z-40">
       {" "}
@@ -14,7 +12,7 @@ export default function Header() {
         </div>
         <div className="space-x-6">
           <div className="text-red-500 hover:text-red-600 font-semibold transition duration-300">
-            {layoutType === "/admin" || layoutType === "/report" ? (
+            {props.loggedin == "true" ? (
               <button className="bg-white rounded-md text-blue-400">
                 Logout
               </button>
@@ -27,3 +25,7 @@ export default function Header() {
     </nav>
   );
 }
+
+Header.propTypes = {
+  loggedin: PropTypes.string.isRequired, // Ensure loggedin is a boolean and required
+};
