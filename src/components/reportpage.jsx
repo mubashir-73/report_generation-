@@ -4,7 +4,11 @@ export default function ReportPage() {
   return (
     <>
       <div className="w-full h-screen p-6 bg-gray-100">
-        <ReportCard />
+        <ReportCard
+          studentName="John Doe"
+          studentRegNo="123456789"
+          department="Computer Science"
+        />
         <div className="flex justify-between items-center p-3 px-4">
           <h2 className="text-2xl font-bold text-center flex-1">
             Report Preview
