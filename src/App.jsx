@@ -1,44 +1,21 @@
 import "./App.css";
-import Login from "./components/login";
-import { Routes, Route } from "react-router-dom";
-import Header from "./components/header";
-import ReportPage from "./components/reportpage";
+
+export default app;
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
-    <>
-      {/* Display Header globally */}
+    <Router>
       <Routes>
-        {/* Root Route */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Header loggedin="false" /> <Login />
-            </>
-          }
-        />
-
-        {/* Admin Route */}
-        <Route
-          path="/admin"
-          element={
-            <>
-              <Header loggedin="false" /> <ReportPage />
-            </>
-          }
-        />
-        <Route
-          path="/report"
-          element={
-            <>
-              <Header loggedin="true" /> <ReportPage />
-            </>
-          }
-        />
-      </Routes>{" "}
-    </>
+        <Route path="/login" element={<Login />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<h1>User Dashboard</h1>} />
+          <Route path="/admin" element={<h1>Admin Panel</h1>} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
