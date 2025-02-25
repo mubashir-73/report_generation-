@@ -14,7 +14,7 @@ function App() {
           path="/"
           element={
             <>
-              <Header loggedin="false" /> <Login />
+              <Header loggedin="false" /> <Login page="Login" />
             </>
           }
         />
@@ -24,7 +24,7 @@ function App() {
           path="/admin"
           element={
             <>
-              <Header loggedin="false" /> <ReportPage />
+              <Header loggedin="false" /> <Login page="notuser" />
             </>
           }
         />
