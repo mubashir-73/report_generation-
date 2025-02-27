@@ -1,21 +1,38 @@
-import "./App.css";
-
-export default app;
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import ProtectedRoute from "./ProtectedRoute";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/Login.jsx";
+import Header from "./components/Header.jsx";
+import AdminDashboard from "./components/AdminDashboard";
+import ManageUsers from "./components/ManageUsers";
+import ProtectedRoute from "./components/protectedRoute";
+import ReportPage from "./components/reportpage.jsx";
 
 function App() {
   return (
-    <Router>
+      <>
+      <Header loggedin="false" /> 
+
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<h1>User Dashboard</h1>} />
-          <Route path="/admin" element={<h1>Admin Panel</h1>} />
+        {/* Public Routes */}
+        <Route path="/" element={<Login />} />
+
+        {/* Protected Admin Routes */}
+        <Route path="/admin" element={<ProtectedRoute role="admin" />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="manage-users" element={<ManageUsers />} />
         </Route>
+
+        {/* Report Page Route */}
+        <Route path="/report" element={<ReportPage />} />
+
+        {/* Redirect to Login if route not found */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </Router>
+      </>
   );
 }
+
+export default App;
+
+
+
+
