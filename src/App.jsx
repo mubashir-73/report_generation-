@@ -3,6 +3,7 @@ import Login from "./components/login";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/header";
 import ReportPage from "./components/reportpage";
+import ReportPDF from "./components/reportpdf";
 
 function App() {
   return (
@@ -21,18 +22,18 @@ function App() {
 
         {/* Admin Route */}
         <Route
-          path="/admin"
+          path="/reportpdf"
           element={
             <>
-              <Header loggedin="false" /> <Login page="notuser" />
+              <Header loggedin="false" /> <ReportPDF />
             </>
           }
         />
         <Route
-          path="/report"
+          path="/dashboard"
           element={
             <>
-              <Header loggedin="true" /> <ReportPage />
+              <Header loggedin="true" /> <ReportPage />{" "}
             </>
           }
         />
