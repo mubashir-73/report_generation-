@@ -8,7 +8,7 @@ export default function Header(props) {
       {" "}
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         <div className="flex items-center space-x-3">
-          <img src={logo} alt="Logo" className="h-10 w-auto " />
+          <img src={logo} alt="Logo" className="h-10 w-18 " />
         </div>
         <div className="space-x-6">
           <div className="text-red-500 hover:text-red-600 font-semibold transition duration-300">

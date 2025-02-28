@@ -5,6 +5,11 @@ export default app;
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
+import Login from "./components/login";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/header";
+import ReportPage from "./components/reportpage";
+import ReportPDF from "./components/reportpdf";
 
 function App() {
   return (
@@ -17,5 +22,34 @@ function App() {
         </Route>
       </Routes>
     </Router>
+        {/* Root Route */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Header loggedin="false" /> <Login page="Login" />
+            </>
+          }
+        />
+
+        {/* Admin Route */}
+        <Route
+          path="/reportpdf"
+          element={
+            <>
+              <Header loggedin="false" /> <ReportPDF />
+            </>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <>
+              <Header loggedin="true" /> <ReportPage />{" "}
+            </>
+          }
+        />
+      </Routes>{" "}
+    </>
   );
 }
