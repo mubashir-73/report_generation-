@@ -75,12 +75,12 @@ function ReportPDF({ report }) {
           <table className="w-full border-collapse border mb-6 text-center">
             <thead>
               <tr>
-                <th className="border p-2">Core/20</th>
-                <th className="border p-2">Verbal/5</th>
-                <th className="border p-2">Aptitude/10</th>
-                <th className="border p-2">Programming/10</th>
-                <th className="border p-2">Comprehension/5</th>
-                <th className="border p-2">Total/50</th>
+                <th className="border p-2">Core</th>
+                <th className="border p-2">Verbal</th>
+                <th className="border p-2">Aptitude</th>
+                <th className="border p-2">Programming</th>
+                <th className="border p-2">Comprehension</th>
+                <th className="border p-2">Total</th>
               </tr>
             </thead>
             <tbody>
@@ -90,7 +90,7 @@ function ReportPDF({ report }) {
                 <td className="border p-2">{report[1]?.aptitude}</td>
                 <td className="border p-2">{report[1]?.programming}</td>
                 <td className="border p-2">{report[1]?.comprehension}</td>
-                <td className="border p-2">{report[1]?.points}</td>
+                <td className="border p-2">{report[1]?.points}/50</td>
               </tr>
             </tbody>
           </table>
@@ -104,12 +104,12 @@ function ReportPDF({ report }) {
           <table className="w-full border-collapse border text-center">
           <thead>
               <tr>
-                <th className="border p-2">Subjective Knowledge/10</th>
-                <th className="border p-2">Communication Skills/10</th>
-                <th className="border p-2">Active Participation/10</th>
-                <th className="border p-2">Body Language/10</th>
-                <th className="border p-2">Listening Skills/10</th>
-                <th className="border p-2">Total/50</th>
+                <th className="border p-2">Subjective Knowledge</th>
+                <th className="border p-2">Communication Skills</th>
+                <th className="border p-2">Active Participation</th>
+                <th className="border p-2">Body Language</th>
+                <th className="border p-2">Listening Skills</th>
+                <th className="border p-2">Total</th>
               </tr>
             </thead>
             <tbody>
@@ -119,7 +119,7 @@ function ReportPDF({ report }) {
                 <td className="border p-2">{report[0]?.active_participation}</td>
                 <td className="border p-2">{report[0]?.body_language}</td>
                 <td className="border p-2">{report[0]?.listening_skills}</td>
-                <td className="border p-2">{report[0]?.total}</td>
+                <td className="border p-2">{report[0]?.total}/50</td>
               </tr>
             </tbody>
           </table>
