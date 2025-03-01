@@ -45,16 +45,16 @@ function ReportPDF({ report }) {
       {/* PDF Content */}
       <div
         ref={pdfRef}
-        className="p-6 w-full border xrounded-lg bg-white shadow-md"
+        className="p-6 w-full rounded-lg bg-white shadow-md"
       >
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <img src={logo} alt="FORESE Logo" className="h-12" />
-            <h2 className="font-bold text-center mb-2 text-2xl flex justify-center">Mock Scores</h2>
+          <h2 className="font-bold text-center mb-2 text-2xl flex justify-center">Mock Placements</h2>
           <img src={svceLogo} alt="SVCE Logo" className="h-12" />
         </div>
 
-        <div className="flex justify-between items-center text-lg mb-6">
+        <div className="flex flex-col items-start text-lg mb-6 space-y-2">
           <p className="text-left">
             <strong className="font-bold">Name:</strong> <span className="font-semibold">{report[0]?.username}</span>
           </p>
@@ -69,18 +69,18 @@ function ReportPDF({ report }) {
 
         {/* Aptitude Scores */}
         <div className="flex flex-col justify-between align-center">
-          <h2 className="font-semibold text-center mb-2 text-xl">
+          <h2 className="font-bold text-center mb-2 text-xl">
             APTITUDE SCORES
           </h2>
           <table className="w-full border-collapse border mb-6 text-center">
             <thead>
               <tr>
-                <th className="border p-2">Core</th>
-                <th className="border p-2">Verbal</th>
-                <th className="border p-2">Aptitude</th>
-                <th className="border p-2">Programming</th>
-                <th className="border p-2">Comprehension</th>
-                <th className="border p-2">Total</th>
+                <th className="border p-2">Core/20</th>
+                <th className="border p-2">Verbal/5</th>
+                <th className="border p-2">Aptitude/10</th>
+                <th className="border p-2">Programming/10</th>
+                <th className="border p-2">Comprehension/5</th>
+                <th className="border p-2">Total/50</th>
               </tr>
             </thead>
             <tbody>
@@ -98,18 +98,18 @@ function ReportPDF({ report }) {
 
         {/* Group Discussion Scores */}
         <div className="flex flex-col justify-between align items-center">
-          <h2 className="font-semibold text-center mb-2 text-xl">
+          <h2 className="font-bold text-center mb-2 text-xl">
             GROUP DISCUSSION SCORES
           </h2>
           <table className="w-full border-collapse border text-center">
           <thead>
               <tr>
-                <th className="border p-2">Subjective Knowledge</th>
-                <th className="border p-2">Communication Skills</th>
-                <th className="border p-2">Active Participation</th>
-                <th className="border p-2">Body Language</th>
-                <th className="border p-2">Listening Skills</th>
-                <th className="border p-2">Total</th>
+                <th className="border p-2">Subjective Knowledge/10</th>
+                <th className="border p-2">Communication Skills/10</th>
+                <th className="border p-2">Active Participation/10</th>
+                <th className="border p-2">Body Language/10</th>
+                <th className="border p-2">Listening Skills/10</th>
+                <th className="border p-2">Total/50</th>
               </tr>
             </thead>
             <tbody>
