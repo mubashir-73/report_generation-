@@ -41,7 +41,7 @@ function ReportPDF({ report }) {
   };
 
   return (
-    <div className="flex flex-col w-full items-center pt-4 pb-8 bg-blue-50">
+    <div className="flex flex-col w-full items-center  pb-8 bg-blue-50">
       {/* PDF Content */}
       <div
         ref={pdfRef}
