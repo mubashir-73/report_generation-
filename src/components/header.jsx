@@ -17,7 +17,7 @@ export default function Header(props) {
                 Logout
               </button>
             ) : (
-              <Link to="/admin">Admin Login</Link>
+              <Link to="/adminlogin">Admin Login</Link>
             )}
           </div>
         </div>
