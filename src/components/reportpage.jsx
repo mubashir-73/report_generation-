@@ -39,7 +39,7 @@ export default function ReportPage() {
   }, [report]);
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center w-full items-center h-screen">
         Loading...
       </div>
     );

@@ -68,7 +68,7 @@ function ReportPDF({ report }) {
 
 
         {/* Aptitude Scores */}
-        <div clssName="flex flex-col justify-between align-center">
+        <div className="flex flex-col justify-between align-center">
           <h2 className="font-semibold text-center mb-2 text-xl">
             APTITUDE SCORES
           </h2>
