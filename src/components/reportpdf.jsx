@@ -14,7 +14,7 @@ function ReportPDF({ report }) {
 
     try {
       const canvas = await html2canvas(element, {
-        scale: 2, // Balanced quality for A4 size
+        scale: 2,
         useCORS: true,
         backgroundColor: null,
       });
@@ -27,7 +27,7 @@ function ReportPDF({ report }) {
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const imgWidth = pdfWidth - 20; // Keep margins
+      const imgWidth = pdfWidth - 20;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight, "", "FAST");
@@ -41,85 +41,75 @@ function ReportPDF({ report }) {
   };
 
   return (
-    <div className="flex flex-col w-full items-center  pb-8 bg-blue-50">
+    <div className="flex flex-col w-full items-center pb-8 bg-blue-50">
       {/* PDF Content */}
-      <div
-        ref={pdfRef}
-        className="p-6 w-full rounded-lg bg-white shadow-md"
-      >
+      <div ref={pdfRef} className="p-6 w-full max-w-10xl rounded-lg bg-white shadow-md">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <img src={logo} alt="FORESE Logo" className="h-12" />
-          <h2 className="font-bold text-center mb-2 text-2xl flex justify-center">Mock Placements</h2>
-          <img src={svceLogo} alt="SVCE Logo" className="h-12" />
+        <div className="flex flex-wrap justify-between items-center mb-4 sm:mb-6">
+          <img src={logo} alt="FORESE Logo" className="h-8 sm:h-10 md:h-12" />
+          <h2 className="font-bold text-lg sm:text-xl md:text-2xl text-center">Mock Placements</h2>
+          <img src={svceLogo} alt="SVCE Logo" className="h-8 sm:h-10 md:h-12" />
         </div>
 
-        <div className="flex flex-col items-start text-lg mb-6 space-y-2">
-          <p className="text-left">
-            <strong className="font-bold">Name:</strong> <span className="font-semibold">{report[0]?.username}</span>
-          </p>
-          <p className="text-center flex-1">
-            <strong className="font-bold">Reg. No:</strong> <span className="font-semibold">{report[0]?.regNo}</span>
-          </p>
-          <p className="text-right">
-            <strong className="font-bold">Department:</strong> <span className="font-semibold">{report[0]?.dept}</span>
-          </p>
+
+        <div className="text-sm sm:text-base md:text-lg mb-4 sm:mb-6">
+          <p><strong>Name:</strong> {report[0]?.username}</p>
+          <p><strong>Reg. No:</strong> {report[0]?.regNo}</p>
+          <p><strong>Department:</strong> {report[0]?.dept}</p>
         </div>
 
 
         {/* Aptitude Scores */}
-        <div className="flex flex-col justify-between align-center">
-          <h2 className="font-bold text-center mb-2 text-xl">
-            APTITUDE SCORES
-          </h2>
-          <table className="w-full border-collapse border mb-6 text-center">
+        <div className="w-full">
+          <h2 className="font-bold text-center mb-2 text-xl">APTITUDE SCORES</h2>
+          <table className="w-full table-fixed border-collapse border text-center text-xs sm:text-sm md:text-base">
             <thead>
               <tr>
-                <th className="border p-2">Core</th>
-                <th className="border p-2">Verbal</th>
-                <th className="border p-2">Aptitude</th>
-                <th className="border p-2">Programming</th>
-                <th className="border p-2">Comprehension</th>
-                <th className="border p-2">Total</th>
+                {["Core", "Verbal", "Aptitude", "Programming", "Comprehension", "Total"].map((heading) => (
+                  <th key={heading} className="border p-1 sm:p-2 break-words">{heading}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border p-2">{report[1]?.core}</td>
-                <td className="border p-2">{report[1]?.verbal}</td>
-                <td className="border p-2">{report[1]?.aptitude}</td>
-                <td className="border p-2">{report[1]?.programming}</td>
-                <td className="border p-2">{report[1]?.comprehension}</td>
-                <td className="border p-2">{report[1]?.points}/50</td>
+                {[
+                  report[1]?.core,
+                  report[1]?.verbal,
+                  report[1]?.aptitude,
+                  report[1]?.programming,
+                  report[1]?.comprehension,
+                  `${report[1]?.points}/50`
+                ].map((data, index) => (
+                  <td key={index} className="border p-1 sm:p-2">{data}</td>
+                ))}
               </tr>
             </tbody>
           </table>
         </div>
 
         {/* Group Discussion Scores */}
-        <div className="flex flex-col justify-between align items-center">
-          <h2 className="font-bold text-center mb-2 text-xl">
-            GROUP DISCUSSION SCORES
-          </h2>
-          <table className="w-full border-collapse border text-center">
-          <thead>
+        <div className="w-full mt-4">
+          <h2 className="font-bold text-center mb-2 text-xl">GROUP DISCUSSION SCORES</h2>
+          <table className="w-full table-fixed border-collapse border text-center text-xs sm:text-sm md:text-base">
+            <thead>
               <tr>
-                <th className="border p-2">Subjective Knowledge</th>
-                <th className="border p-2">Communication Skills</th>
-                <th className="border p-2">Active Participation</th>
-                <th className="border p-2">Body Language</th>
-                <th className="border p-2">Listening Skills</th>
-                <th className="border p-2">Total</th>
+                {["Subjective Knowledge", "Communication Skills", "Active Participation", "Body Language", "Listening Skills", "Total"].map((heading) => (
+                  <th key={heading} className="border p-1 sm:p-2 break-words">{heading}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border p-2">{report[0]?.subject_knowledge}</td>
-                <td className="border p-2">{report[0]?.communication_skills}</td>
-                <td className="border p-2">{report[0]?.active_participation}</td>
-                <td className="border p-2">{report[0]?.body_language}</td>
-                <td className="border p-2">{report[0]?.listening_skills}</td>
-                <td className="border p-2">{report[0]?.total}/50</td>
+                {[
+                  report[0]?.subject_knowledge,
+                  report[0]?.communication_skills,
+                  report[0]?.active_participation,
+                  report[0]?.body_language,
+                  report[0]?.listening_skills,
+                  `${report[0]?.total}/50`
+                ].map((data, index) => (
+                  <td key={index} className="border p-1 sm:p-2">{data}</td>
+                ))}
               </tr>
             </tbody>
           </table>
@@ -129,7 +119,7 @@ function ReportPDF({ report }) {
       {/* Download Button */}
       <button
         onClick={handleDownload}
-        className="flex flex-col justify-between align-center mt-6 px-6 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-800 transition"
+        className="mt-6 px-6 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-800 transition"
       >
         Download PDF
       </button>
