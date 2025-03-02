@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/header";
 import ReportPage from "./components/reportpage";
 import ReportPDF from "./components/reportpdf";
+import OtpInputfunc from "./components/otp-input";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
   return (
@@ -19,24 +21,37 @@ function App() {
             </>
           }
         />
+        <Route
+          path="/test"
+          element={
+            <>
+              <Header loggedin="false" />
+              <OtpInputfunc email="test@gmail.com" registerno="123456789" />
+            </>
+          }
+        />
 
         {/* Admin Route */}
-        <Route
-          path="/reportpdf"
-          element={
-            <>
-              <Header loggedin="false" /> <ReportPDF />
-            </>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <>
-              <Header loggedin="true" /> <ReportPage />{" "}
-            </>
-          }
-        />
+        <Route element={<RequireAuth />}>
+          <Route
+            path="/reportpdf"
+            element={
+              <>
+                <Header loggedin="false" /> <ReportPDF />
+              </>
+            }
+          />
+        </Route>
+        <Route element={<RequireAuth />}>
+          <Route
+            path="/dashboard"
+            element={
+              <>
+                <Header loggedin="true" /> <ReportPage />{" "}
+              </>
+            }
+          />
+        </Route>
       </Routes>{" "}
     </>
   );

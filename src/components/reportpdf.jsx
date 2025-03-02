@@ -13,13 +13,6 @@ function ReportPDF({ report }) {
     if (!element) return;
 
     try {
-      const canvas = await html2canvas(element, {
-        scale: 2, // Balanced quality for A4 size
-        useCORS: true,
-        backgroundColor: null,
-      });
-
-      const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -27,10 +20,59 @@ function ReportPDF({ report }) {
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const imgWidth = pdfWidth - 20; // Keep margins
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight, "", "FAST");
+      // Ensure all content is visible before capturing
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      const canvas = await html2canvas(element, {
+        scale: 2, // High quality
+        useCORS: true,
+        backgroundColor: "#fff", // Ensures no transparency issues
+        scrollY: -window.scrollY, // Capture full page even if scrolled
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      let imgWidth = pdfWidth - 20; // Keep margins
+      let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let yPosition = 10; // Start position
+
+      if (imgHeight <= pdfHeight - 20) {
+        // If content fits in one page
+        pdf.addImage(
+          imgData,
+          "PNG",
+          10,
+          yPosition,
+          imgWidth,
+          imgHeight,
+          "",
+          "FAST",
+        );
+      } else {
+        // Multi-page handling
+        let remainingHeight = imgHeight;
+
+        while (remainingHeight > 0) {
+          pdf.addImage(
+            imgData,
+            "PNG",
+            10,
+            yPosition,
+            imgWidth,
+            imgHeight,
+            "",
+            "FAST",
+          );
+          remainingHeight -= pdfHeight;
+          if (remainingHeight > 0) {
+            pdf.addPage();
+            yPosition = 10;
+          }
+        }
+      }
+
       pdf.setProperties({ title: "Forese Score Sheet" });
 
       pdf.save("Forese_Score_Sheet.pdf");
