@@ -8,6 +8,26 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 function ScoresPage({ report }) {
+  const pdfRef = useRef(null);
+  const [logoBase64, setLogoBase64] = useState(null);
+  const [svceLogoBase64, setSvceLogoBase64] = useState(null);
+  useEffect(() => {
+    const convertToBase64 = (image, setImageBase64) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = () => setImageBase64(reader.result);
+      reader.onerror = (error) =>
+        console.error("Error converting image:", error);
+    };
+
+    fetch(logo)
+      .then((res) => res.blob())
+      .then((blob) => convertToBase64(blob, setLogoBase64));
+
+    fetch(svceLogo)
+      .then((res) => res.blob())
+      .then((blob) => convertToBase64(blob, setSvceLogoBase64));
+  }, []);
   // Sample data for a single user
   // eslint-disable-next-line no-unused-vars
   const [aptitudeScores, setAptitudeScores] = useState({
@@ -53,7 +73,7 @@ function ScoresPage({ report }) {
       };
 
       const reader = new FileReader();
-      fetch("/logo.png")
+      fetch("../assets/svce-logo.jpeg")
         .then((response) => response.blob())
         .then((blob) => {
           reader.onload = () => setSvceLogoData(reader.result);
@@ -61,7 +81,7 @@ function ScoresPage({ report }) {
         })
         .catch((error) => console.error("Error loading SVCE logo:", error));
     };
-    svceImg.src = "/logo.png";
+    svceImg.src = "../assets/svce-logo.jpeg";
 
     // Load the FORESE logo
     const foreseImg = new Image();
@@ -73,7 +93,7 @@ function ScoresPage({ report }) {
       };
 
       const reader = new FileReader();
-      fetch("/login-logo.png")
+      fetch("../assets/login-logo.png")
         .then((response) => response.blob())
         .then((blob) => {
           reader.onload = () => setForeseLogoData(reader.result);
@@ -81,8 +101,10 @@ function ScoresPage({ report }) {
         })
         .catch((error) => console.error("Error loading FORESE logo:", error));
     };
-    foreseImg.src = "/login-logo.png";
+    foreseImg.src = "../assets/login-logo.png";
   }, []);
+  console.log("SVCE Logo Base64:", svceLogoBase64);
+  console.log("Forese Logo Base64:", logoBase64);
 
   // Function to download the page as PDF
   const downloadPDF = () => {
@@ -103,14 +125,15 @@ function ScoresPage({ report }) {
       doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
 
       // Define consistent vertical position for all header elements
+      // Add logos and title with better alignment
+      //
       const headerY = 15;
 
-      // Add logos and title with better alignment
-      if (svceLogoData) {
+      if (svceLogoBase64) {
         const svceAspectRatio = svceDimensionsRef.current.aspectRatio || 1;
         const svceWidth = 25;
         const svceHeight = svceWidth / svceAspectRatio;
-        doc.addImage(svceLogoData, "PNG", 15, headerY, svceWidth, svceHeight);
+        doc.addImage(svceLogoBase64, "PNG", 160, 13, 39, 20);
       }
 
       // Add central title - aligned vertically with logos
@@ -118,22 +141,15 @@ function ScoresPage({ report }) {
       doc.setFont("helvetica", "bold");
       doc.text("Mock Placement", 105, headerY + 10, { align: "center" });
 
-      if (foreseLogoData) {
+      if (logoBase64) {
         const foreseAspectRatio = foreseDimensionsRef.current.aspectRatio || 1;
         const foreseWidth = 25;
         const foreseHeight = foreseWidth / foreseAspectRatio;
-        doc.addImage(
-          foreseLogoData,
-          "PNG",
-          170,
-          headerY,
-          foreseWidth,
-          foreseHeight,
-        );
+        doc.addImage(logoBase64, "PNG", 15, headerY, 35, 20);
       }
 
       // Add student details - adjusted starting position
-      const startY = 45; // Increased to provide more space after the header
+      const startY = 50; // Increased to provide more space after the header
       doc.setFontSize(12);
       doc.setFont("helvetica", "normal");
       doc.text(`Register Number: ${aptitudeScores.registerNo}`, 14, startY);
@@ -143,11 +159,11 @@ function ScoresPage({ report }) {
       // Aptitude Table
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
-      doc.text("Aptitude Test Scores", 14, startY + 25);
+      doc.text("Aptitude Test Scores", 14, startY + 30);
 
       // Use the autoTable function directly with categories as column headers
       autoTable(doc, {
-        startY: startY + 30,
+        startY: startY + 40,
         head: [
           [
             "Aptitude",
@@ -165,7 +181,7 @@ function ScoresPage({ report }) {
             report[1]?.aptitude || "absent",
             report[1]?.programming || "absent",
             report[1]?.comprehension || "absent",
-            report[1]?.total ? `${report[0]?.total}/50` : "absent",
+            report[1]?.points ? `${report[1]?.points}/50` : "absent",
           ],
         ],
         theme: "grid",
@@ -173,15 +189,15 @@ function ScoresPage({ report }) {
       });
 
       // Get the last Y position
-      const finalY = (doc.lastAutoTable || { finalY: startY + 40 }).finalY;
+      const finalY = (doc.lastAutoTable || { finalY: startY + 50 }).finalY;
 
       // GD Table
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
-      doc.text("Group Discussion Scores", 14, finalY + 10);
+      doc.text("Group Discussion Scores", 14, finalY + 20);
 
       autoTable(doc, {
-        startY: finalY + 15,
+        startY: finalY + 30,
         head: [
           [
             "Subject Knowledge",
@@ -231,7 +247,7 @@ function ScoresPage({ report }) {
             <strong>Name:</strong> {report[0]?.username}
           </p>
           <p>
-            <strong>Reg. No:</strong> {report[0]?.regNo}
+            <strong>Register No:</strong> {report[0]?.regNo}
           </p>
           <p>
             <strong>Department:</strong> {report[0]?.dept}
