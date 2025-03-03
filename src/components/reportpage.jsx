@@ -6,7 +6,28 @@ export default function ReportPage() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const token = localStorage.getItem("token"); // Fetch token inside useEffect
+    const departments = [
+      { id: "aids", name: "Artificial Intelligence and Data Science" },
+      { id: "auto", name: "Automobile Engineering" },
+      { id: "bio", name: "Biotechnology" },
+      { id: "chem", name: "Chemical Engineering" },
+      { id: "civil", name: "Civil Engineering" },
+      { id: "cs", name: "Computer Science and Engineering" },
+      { id: "ee", name: "Electrical and Electronics Engineering" },
+      { id: "ec", name: "Electronics and Communication Engineering" },
+      { id: "mechat", name: "Mechanical and Automation Engineering" },
+      { id: "mech", name: "Mechanical Engineering" },
+      { id: "it", name: "Information Technology" },
+    ];
 
+    function normalizeDept(dataArray) {
+      return dataArray.map((item) => {
+        const matchedDept = departments.find(
+          (dept) => dept.id === item.dept || dept.name === item.dept,
+        );
+        return { ...item, dept: matchedDept ? matchedDept.name : item.dept }; // Replace ID with full name
+      });
+    }
     const fetchReport = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/score", {
@@ -21,7 +42,8 @@ export default function ReportPage() {
         }
 
         const data = await response.json();
-        setReport(data);
+        const modifiedData = normalizeDept(data);
+        setReport(modifiedData);
         console.log("Report Data:", data); // Logs the correct response
       } catch (error) {
         console.error("Error fetching tasks:", error);

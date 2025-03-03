@@ -19,7 +19,7 @@ export default function OtpInputfunc({ email, registerno }) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Invalid credentials");
+        window.alert("Invalid OTP");
       }
 
       const data = await response.json();

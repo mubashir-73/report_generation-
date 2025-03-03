@@ -176,12 +176,12 @@ function ScoresPage({ report }) {
         ],
         body: [
           [
-            report[1]?.core || "absent",
-            report[1]?.verbal || "absent",
-            report[1]?.aptitude || "absent",
-            report[1]?.programming || "absent",
-            report[1]?.comprehension || "absent",
-            report[1]?.points ? `${report[1]?.points}/50` : "absent",
+            report[1]?.core === -1 ? "" : report[1]?.core,
+            report[1]?.verbal === -1 ? "" : report[1]?.verbal,
+            report[1]?.aptitude === -1 ? "" : report[1]?.aptitude,
+            report[1]?.programming === -1 ? "" : report[1]?.programming,
+            report[1]?.comprehension === -1 ? "" : report[1]?.comprehension,
+            report[1]?.points === -1 ? "Absent" : `${report[1]?.points}/50`,
           ],
         ],
         theme: "grid",
@@ -210,12 +210,20 @@ function ScoresPage({ report }) {
         ],
         body: [
           [
-            report[0]?.subject_knowledge || "absent",
-            report[0]?.communication_skills || "absent",
-            report[0]?.active_participation || "absent",
-            report[0]?.body_language || "absent",
-            report[0]?.listening_skills || "absent",
-            report[0]?.total ? `${report[0]?.total}/50` : "absent",
+            report[0]?.subject_knowledge === -1
+              ? " "
+              : report[0]?.subject_knowledge,
+            report[0]?.communication_skills === -1
+              ? " "
+              : report[0]?.communication_skills,
+            report[0]?.active_participation === -1
+              ? " "
+              : report[0]?.active_participation,
+            report[0]?.body_language === -1 ? " " : report[0]?.body_language,
+            report[0]?.listening_skills === -1
+              ? " "
+              : report[0]?.listening_skills,
+            report[0]?.total === -1 ? "Absent" : `${report[0]?.total}/50`,
           ],
         ],
         theme: "grid",
@@ -280,12 +288,16 @@ function ScoresPage({ report }) {
             <Tbody>
               <Tr>
                 {[
-                  report[1]?.core || "absent",
-                  report[1]?.verbal || "absent",
-                  report[1]?.aptitude || "absent",
-                  report[1]?.programming || "absent",
-                  report[1]?.comprehension || "absent",
-                  report[0]?.total ? `${report[0]?.total}/50` : "absent",
+                  report[1]?.core === -1 ? "" : report[1]?.core,
+                  report[1]?.verbal === -1 ? "" : report[1]?.verbal,
+                  report[1]?.aptitude === -1 ? "" : report[1]?.aptitude,
+                  report[1]?.programming === -1 ? "" : report[1]?.programming,
+                  report[1]?.comprehension === -1
+                    ? ""
+                    : report[1]?.comprehension,
+                  report[1]?.points === -1
+                    ? "Absent"
+                    : `${report[1]?.points}/50`,
                 ].map((data, index) => (
                   <Td key={index} className="border p-1 sm:p-2">
                     {data}
@@ -324,12 +336,22 @@ function ScoresPage({ report }) {
             <Tbody>
               <Tr>
                 {[
-                  report[0]?.subject_knowledge || "absent",
-                  report[0]?.communication_skills || "absent",
-                  report[0]?.active_participation || "absent",
-                  report[0]?.body_language || "absent",
-                  report[0]?.listening_skills || "absent",
-                  report[0]?.total ? `${report[0]?.total}/50` : "absent",
+                  report[0]?.subject_knowledge === -1
+                    ? " "
+                    : report[0]?.subject_knowledge,
+                  report[0]?.communication_skills === -1
+                    ? " "
+                    : report[0]?.communication_skills,
+                  report[0]?.active_participation === -1
+                    ? " "
+                    : report[0]?.active_participation,
+                  report[0]?.body_language === -1
+                    ? " "
+                    : report[0]?.body_language,
+                  report[0]?.listening_skills === -1
+                    ? " "
+                    : report[0]?.listening_skills,
+                  report[0]?.total === -1 ? "Absent" : `${report[0]?.total}/50`,
                 ].map((data, index) => (
                   <Td key={index} className="border p-1 sm:p-2">
                     {data}
