@@ -48,7 +48,7 @@ function App() {
             path="/dashboard"
             element={
               <>
-                <div className="flex flex-col justify-center h-screen">
+                <div className="flex flex-col justify-center absolute">
                   <Header loggedin="true" /> <ReportPage />
                   <br />
                   <br />
