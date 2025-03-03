@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@react-pdf/renderer": "^4.2.2",
     "@tailwindcss/vite": "^4.0.6",
     "html2canvas": "^1.4.1",
@@ -20,6 +23,7 @@
     "react-dom": "^19.0.0",
     "react-otp-input": "^3.1.1",
     "react-router-dom": "^7.1.1",
+    "react-super-responsive-table": "^6.0.1",
     "react-to-print": "^3.0.5",
     "tailwindcss": "^4.0.6"
   },

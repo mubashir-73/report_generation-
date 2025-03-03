@@ -46,23 +46,15 @@ export default function ReportPage() {
   }
   return (
     <>
-      <div className="w-full h-screen p-6 bg-gray-100">
-        <ReportCard
-          studentName={report[0]?.username}
-          studentRegNo={report[0]?.regNo}
-          department={report[0]?.dept}
-        />
-        <div className="flex flex-col justify-between  p-3 px-4">
-          <h2 className="text-2xl font-bold text-center flex-1">
-            Report Preview
-          </h2>
+      <div className="min-h-screen w-full p-4 sm:p-6 pt-6 md:p-6 bg-blue-50 relative">
+        <div className="flex flex-col justify-between pb-4">
           {report ? (
             <DownloadPDF report={report} />
           ) : (
             <h1>Report is loading...</h1>
           )}{" "}
         </div>
-      </div>
+      </div>{" "}
     </>
   );
 }

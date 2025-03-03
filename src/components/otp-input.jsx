@@ -6,6 +6,7 @@ import { useState } from "react";
 export default function OtpInputfunc({ email, registerno }) {
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleOtpLogin = async (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ export default function OtpInputfunc({ email, registerno }) {
       }
 
       const data = await response.json();
+      setSuccess(true);
       console.log("Login Response:", data);
       localStorage.setItem("token", data.accessToken);
       navigate("/dashboard");
@@ -40,7 +42,7 @@ export default function OtpInputfunc({ email, registerno }) {
           htmlFor="otp"
           className="text-center text-xl font-semibold text-blue-600"
         >
-          OTP
+          ENTER OTP
         </label>
         <div className="flex justify-center">
           <OtpInput
@@ -49,8 +51,8 @@ export default function OtpInputfunc({ email, registerno }) {
             numInputs={4} // Adjust based on your OTP length
             isInputNum
             inputStyle={{
-              width: "75px",
-              height: "40px",
+              width: "60px",
+              height: "70px",
               margin: "10px",
               fontSize: "20px",
               borderRadius: "5px",
@@ -60,14 +62,16 @@ export default function OtpInputfunc({ email, registerno }) {
             renderInput={(props) => (
               <input
                 {...props}
-                className="w-full px-4 py-2 mt-1 text-gray-900 bg-gray-200 rounded-lg focus:ring-blue-400 focus:outline-none"
+                className={`w-full px-4 py-2 mt-1 text-gray-900 rounded-lg focus:ring-blue-400 focus:outline-none ${
+                  success ? "ring-green-600" : "ring-gray-200"
+                }`}
               />
             )}
           />
         </div>
         <button
           type="submit"
-          className="w-full py-2 mt-4 text-white rounded-lg transition duration-300 bg-blue-600 hover:bg-blue-700"
+          className="self-center w-40 py-2 mt-4 text-white rounded-lg transition duration-300 bg-blue-600 hover:bg-blue-700"
         >
           Verify
         </button>

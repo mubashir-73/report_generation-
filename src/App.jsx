@@ -4,8 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/header";
 import ReportPage from "./components/reportpage";
 import ReportPDF from "./components/reportpdf";
-import OtpInputfunc from "./components/otp-input";
 import RequireAuth from "./components/RequireAuth";
+import Footer from "./components/footer";
 
 function App() {
   return (
@@ -17,7 +17,8 @@ function App() {
           path="/"
           element={
             <>
-              <Header loggedin="false" /> <Login page="Login" />
+              <Header loggedin="false" /> <Login page="Login" />{" "}
+              <Footer loggedin="false" />
             </>
           }
         />
@@ -25,8 +26,7 @@ function App() {
           path="/test"
           element={
             <>
-              <Header loggedin="false" />
-              <OtpInputfunc email="test@gmail.com" registerno="123456789" />
+              <Header loggedin="true" />
             </>
           }
         />
@@ -37,7 +37,8 @@ function App() {
             path="/reportpdf"
             element={
               <>
-                <Header loggedin="false" /> <ReportPDF />
+                <Header loggedin="false" /> <ReportPDF />{" "}
+                <Footer loggedin="true" />
               </>
             }
           />
@@ -47,7 +48,11 @@ function App() {
             path="/dashboard"
             element={
               <>
-                <Header loggedin="true" /> <ReportPage />{" "}
+                <div className="flex flex-col justify-center h-screen">
+                  <Header loggedin="true" /> <ReportPage />
+                  <br />
+                  <br />
+                </div>
               </>
             }
           />

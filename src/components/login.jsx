@@ -1,5 +1,7 @@
 import { useState } from "react";
 import OtpInputfunc from "./otp-input";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
   const [otp, setOtp] = useState(false);
@@ -66,22 +68,24 @@ export default function Login() {
             <OtpInputfunc email={email} registerno={Registerno} />
             <button
               onClick={fetchData}
-              className="mt-4 px-2 text-center w-30 h-10  text-sm bg-slate-100 rounded-lg hover:bg-slate-300"
+              className="mt-4 px-2 text-center w-30 h-10  text-sm  rounded-lg text-blue-600 hover:bg-slate-300"
             >
-              resend otp
+              <u>Resend otp</u>
             </button>
           </>
         ) : (
           <>
-            <h2 className="text-2xl font-semibold text-center text-gray-700">
-              Login
+            <h2 className="flex text-2xl text-blue-600 gap-3 justify-center font-semibold text-center ">
+              <FontAwesomeIcon className="mt-1" icon={faUser} />
+              Student Login
             </h2>
+            <hr className="mt-4 border-blue-500 border-1" />
 
             {error && <p className="text-red-500 text-center mt-2">{error}</p>}
 
             <form onSubmit={handleLogin} className="mt-6">
               <label className="block mb-4">
-                <span className="text-sm text-gray-600">Username</span>
+                <span className="text-sm text-gray-600">User Email</span>
                 <input
                   type="text"
                   value={email}
@@ -93,7 +97,7 @@ export default function Login() {
               </label>
 
               <label className="block mb-4">
-                <span className="text-sm text-gray-600">Register No</span>
+                <span className="text-sm text-gray-600">Register Number</span>
                 <input
                   type="text"
                   value={Registerno}
