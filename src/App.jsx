@@ -49,8 +49,8 @@ function App() {
             element={
               <>
                 <div className="flex flex-col justify-center">
-                  <Header loggedin="true" /> <ReportPage /> <br />
-                  <br />
+                  <Header loggedin="true" /> <ReportPage />{" "}
+                  <Footer loggedin="true" />
                 </div>
               </>
             }
