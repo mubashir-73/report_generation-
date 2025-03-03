@@ -1,6 +1,5 @@
-import ReportCard from "./reportcard";
 import { useEffect, useState } from "react";
-import DownloadPDF from "./reportpdf";
+import ScoresPage from "./Scorepage";
 
 export default function ReportPage() {
   const [report, setReport] = useState({});
@@ -49,7 +48,7 @@ export default function ReportPage() {
       <div className="min-h-screen w-full p-4 sm:p-6 pt-6 md:p-6 bg-blue-50 relative">
         <div className="flex flex-col justify-between pb-4">
           {report ? (
-            <DownloadPDF report={report} />
+            <ScoresPage report={report} />
           ) : (
             <h1>Report is loading...</h1>
           )}{" "}

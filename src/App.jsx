@@ -48,9 +48,8 @@ function App() {
             path="/dashboard"
             element={
               <>
-                <div className="flex flex-col justify-center h-screen">
-                  <Header loggedin="true" /> <ReportPage />
-                  <br />
+                <div className="flex flex-col justify-center">
+                  <Header loggedin="true" /> <ReportPage /> <br />
                   <br />
                 </div>
               </>
