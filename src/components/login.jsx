@@ -51,14 +51,14 @@ export default function Login() {
     const registerno = formData.get("registerno");
 
     // Email & RegNo Validation
-    //const emailRegex = /^2022[a-z]{2}\d{4}@svce\.ac\.in$/;
+    const emailRegex = /^2022[a-z]{2}\d{4}@svce\.ac\.in$/;
     const regNoRegex = /^212722\d{7}$/;
 
-    //if (!username.match(emailRegex)) {
-     // setError("Invalid email format. Use format: 2022xx0000@svce.ac.in");
-      //setLoading(false);
-      //return;
-    //}
+    if (!username.match(emailRegex)) {
+     setError("Invalid email format. Use format: 2022xx0000@svce.ac.in");
+      setLoading(false);
+      return;
+    }
 
     if (!registerno.match(regNoRegex)) {
       setError("Invalid register number format. Use format: 2127220000000");
@@ -71,7 +71,7 @@ export default function Login() {
 
 
     if (!username || !registerno) {
-      setError("Username and password are required.");
+      setError("Email and registerno are required.");
       setLoading(false);
       return;
     }
