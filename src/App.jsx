@@ -1,21 +1,65 @@
 import "./App.css";
-
-export default app;
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import ProtectedRoute from "./ProtectedRoute";
+import Login from "./components/login";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/header";
+import ReportPage from "./components/reportpage";
+import ReportPDF from "./components/reportpdf";
+import RequireAuth from "./components/RequireAuth";
+import Footer from "./components/footer";
 
 function App() {
   return (
-    <Router>
+    <>
+      {/* Display Header globally */}
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<h1>User Dashboard</h1>} />
-          <Route path="/admin" element={<h1>Admin Panel</h1>} />
+        {/* Root Route */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Header loggedin="false" /> <Login page="Login" />{" "}
+              <Footer loggedin="false" />
+            </>
+          }
+        />
+        <Route
+          path="/test"
+          element={
+            <>
+              <Header loggedin="true" />
+            </>
+          }
+        />
+
+        {/* Admin Route */}
+        <Route element={<RequireAuth />}>
+          <Route
+            path="/reportpdf"
+            element={
+              <>
+                <Header loggedin="false" /> <ReportPDF />{" "}
+                <Footer loggedin="true" />
+              </>
+            }
+          />
         </Route>
-      </Routes>
-    </Router>
+        <Route element={<RequireAuth />}>
+          <Route
+            path="/dashboard"
+            element={
+              <>
+                <div className="flex flex-col justify-center h-screen">
+                  <Header loggedin="true" /> <ReportPage />
+                  <br />
+                  <br />
+                </div>
+              </>
+            }
+          />
+        </Route>
+      </Routes>{" "}
+    </>
   );
 }
+
+export default App;
