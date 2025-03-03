@@ -3,6 +3,9 @@ import Login from "./components/login";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/header";
 import ReportPage from "./components/reportpage";
+import ReportPDF from "./components/reportpdf";
+import RequireAuth from "./components/RequireAuth";
+import Footer from "./components/footer";
 
 function App() {
   return (
@@ -14,28 +17,45 @@ function App() {
           path="/"
           element={
             <>
-              <Header loggedin="false" /> <Login />
+              <Header loggedin="false" /> <Login page="Login" />{" "}
+              <Footer loggedin="false" />
+            </>
+          }
+        />
+        <Route
+          path="/test"
+          element={
+            <>
+              <Header loggedin="true" />
             </>
           }
         />
 
         {/* Admin Route */}
-        <Route
-          path="/admin"
-          element={
-            <>
-              <Header loggedin="false" /> <ReportPage />
-            </>
-          }
-        />
-        <Route
-          path="/report"
-          element={
-            <>
-              <Header loggedin="true" /> <ReportPage />
-            </>
-          }
-        />
+        <Route element={<RequireAuth />}>
+          <Route
+            path="/reportpdf"
+            element={
+              <>
+                <Header loggedin="false" /> <ReportPDF />{" "}
+                <Footer loggedin="true" />
+              </>
+            }
+          />
+        </Route>
+        <Route element={<RequireAuth />}>
+          <Route
+            path="/dashboard"
+            element={
+              <>
+                <div className="flex flex-col justify-center">
+                  <Header loggedin="true" /> <ReportPage />{" "}
+                  <Footer loggedin="true" />
+                </div>
+              </>
+            }
+          />
+        </Route>
       </Routes>{" "}
     </>
   );
