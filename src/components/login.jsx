@@ -16,7 +16,7 @@ export default function Login() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: email,
+          email: email.toLowerCase(), //convert email to lowercase
           registerNo: Registerno,
           role: "user",
         }),
@@ -45,12 +45,30 @@ export default function Login() {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     const formData = new FormData(e.currentTarget);
     const username = formData.get("email");
     const registerno = formData.get("registerno");
-    console.log(username, registerno);
+
+    // Email & RegNo Validation
+    //const emailRegex = /^2022[a-z]{2}\d{4}@svce\.ac\.in$/;
+    const regNoRegex = /^212722\d{7}$/;
+
+    //if (!username.match(emailRegex)) {
+     // setError("Invalid email format. Use format: 2022xx0000@svce.ac.in");
+      //setLoading(false);
+      //return;
+    //}
+
+    if (!registerno.match(regNoRegex)) {
+      setError("Invalid register number format. Use format: 2127220000000");
+      setLoading(false);
+      return;
+    }
+
     setRegisterno(registerno);
     setEmail(username);
+
 
     if (!username || !registerno) {
       setError("Username and password are required.");
@@ -120,6 +138,7 @@ export default function Login() {
                 {loading ? "waiting..." : "Get OTP"}
               </button>
             </form>
+            
           </>
         )}
       </div>
