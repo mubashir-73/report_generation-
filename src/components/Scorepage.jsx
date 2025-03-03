@@ -53,7 +53,7 @@ function ScoresPage({ report }) {
       };
 
       const reader = new FileReader();
-      fetch("/logo.png")
+      fetch("../assets/svce-logo.jpeg")
         .then((response) => response.blob())
         .then((blob) => {
           reader.onload = () => setSvceLogoData(reader.result);
@@ -61,7 +61,7 @@ function ScoresPage({ report }) {
         })
         .catch((error) => console.error("Error loading SVCE logo:", error));
     };
-    svceImg.src = "/logo.png";
+    svceImg.src = "../assets/svce-logo.jpeg";
 
     // Load the FORESE logo
     const foreseImg = new Image();
@@ -73,7 +73,7 @@ function ScoresPage({ report }) {
       };
 
       const reader = new FileReader();
-      fetch("/login-logo.png")
+      fetch("../assets/login-logo.png")
         .then((response) => response.blob())
         .then((blob) => {
           reader.onload = () => setForeseLogoData(reader.result);
@@ -81,7 +81,7 @@ function ScoresPage({ report }) {
         })
         .catch((error) => console.error("Error loading FORESE logo:", error));
     };
-    foreseImg.src = "/login-logo.png";
+    foreseImg.src = "../assests/login-logo.png";
   }, []);
 
   // Function to download the page as PDF
