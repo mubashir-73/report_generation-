@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import logo from "../assets/login-logo-small.png";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -37,7 +37,7 @@ export default function Header(props) {
                   Logout
                 </button>
               ) : (
-                <Link to="/admin">Admin Login</Link>
+                <></>
               )}
             </div>
           </div>
