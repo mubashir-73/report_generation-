@@ -51,6 +51,7 @@ export default function ReportPage() {
         if (!response.ok) {
           console.log("Error fetching tasks:", response.status);
           alert("Error fetching tasks");
+          localStorage.clear();
           return;
         }
 
