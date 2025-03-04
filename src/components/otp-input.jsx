@@ -11,22 +11,25 @@ export default function OtpInputfunc({ email, registerno }) {
   const handleOtpLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/users/verify", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp, registerNo: registerno }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        // const errorData = await response.json();
         window.alert("Invalid OTP");
+        return;
       }
 
       const data = await response.json();
       setSuccess(true);
       console.log("Login Response:", data);
-      localStorage.setItem("token", data.accessToken);
-      navigate("/dashboard");
+      if (data.accessToken) {
+        localStorage.setItem("token", data.accessToken);
+        navigate("/dashboard");
+      }
     } catch (err) {
       console.error("Error:", err.message);
     }

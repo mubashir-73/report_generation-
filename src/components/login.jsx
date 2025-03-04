@@ -1,36 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import OtpInputfunc from "./otp-input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [otp, setOtp] = useState(false);
   const [email, setEmail] = useState("");
   const [Registerno, setRegisterno] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    let timer;
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [countdown]);
+
+  const startResendTimer = () => {
+    setCountdown(120); // 2 minutes in seconds
+  };
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          registerNo: Registerno,
-          role: "user",
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email,
+            registerNo: Registerno,
+            role: "user",
+          }),
+        }
+      );
 
       const data = await response.json();
       console.log("Login Response:", data);
 
       if (!response.ok) {
-        throw new Error(data.message || "Invalid credentials");
+        setError(data.message || "Invalid credentials");
+        return;
       }
       setOtp(true);
+      // Start the timer on initial OTP send or resend
+      startResendTimer();
+      // Show alert for OTP resend if OTP was already true
+      if (otp) {
+        alert("OTP has been resent to your email!");
+      }
       // Store token & role securely
-      localStorage.setItem("token", data.accessToken);
+      // localStorage.setItem("token", data.accessToken);
 
       // Redirect based on user role
     } catch (err) {
@@ -76,17 +110,34 @@ export default function Login() {
     fetchData();
   };
 
+  const handleResendOtp = async () => {
+    setResendLoading(true);
+    await fetchData();
+    setResendLoading(false);
+  };
+
   return (
-    <div className="flex bg-blue-50 items-center justify-center min-h-screen">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+    <div className="flex bg-blue-50 items-center justify-center h-[calc(100vh-60px)]">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg mt-[72px]">
         {otp ? (
           <>
             <OtpInputfunc email={email} registerno={Registerno} />
             <button
-              onClick={fetchData}
-              className="mt-4 px-2 text-center w-30 h-10  text-sm  rounded-lg text-blue-600 hover:bg-slate-300"
+              onClick={handleResendOtp}
+              disabled={resendLoading || countdown > 0}
+              className={`mt-4 px-2 text-center w-30 h-10 text-sm rounded-lg ${
+                resendLoading || countdown > 0
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-600 hover:bg-slate-300"
+              }`}
             >
-              <u>Resend otp</u>
+              <u>
+                {resendLoading
+                  ? "Sending..."
+                  : countdown > 0
+                  ? `Resend OTP in ${countdown}s`
+                  : "Resend OTP"}
+              </u>
             </button>
           </>
         ) : (
@@ -101,7 +152,7 @@ export default function Login() {
 
             <form onSubmit={handleLogin} className="mt-6">
               <label className="block mb-4">
-                <span className="text-sm text-gray-600">User Email</span>
+                <span className="text-sm text-gray-600">College Email</span>
                 <input
                   type="text"
                   value={email}

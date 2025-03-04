@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export default function Footer({ loggedin }) {
   return (
-    <footer className="bg-blue-50 text-black text-center py-4">
+    <footer className="bg-blue-50 text-black text-center py-4 h-[60px] flex items-center justify-center">
       <p className="text-sm">
         {loggedin === "true" ? (
           <>

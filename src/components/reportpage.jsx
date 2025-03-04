@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import ScoresPage from "./Scorepage";
+import { useNavigate } from "react-router-dom";
 
 export default function ReportPage() {
   const [report, setReport] = useState({});
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token"); // Fetch token inside useEffect
+    if (!token) {
+      navigate("/");
+      return;
+    }
     const departments = [
       { id: "aids", name: "Artificial Intelligence and Data Science" },
       { id: "auto", name: "Automobile Engineering" },
@@ -30,7 +36,12 @@ export default function ReportPage() {
     }
     const fetchReport = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/score", {
+        if (!token) {
+          alert("Please login to view the report");
+          return;
+        }
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/score`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +49,9 @@ export default function ReportPage() {
           },
         });
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          console.log("Error fetching tasks:", response.status);
+          alert("Error fetching tasks");
+          return;
         }
 
         const data = await response.json();
@@ -67,7 +80,7 @@ export default function ReportPage() {
   }
   return (
     <>
-      <div className="min-h-screen w-full p-4 sm:p-6 pt-6 md:p-6 bg-blue-50 relative">
+      <div className="min-h-[calc(100vh-60px)] w-full p-4 sm:p-6 pt-6 md:p-6 bg-blue-50 relative">
         <div className="flex flex-col justify-between pb-4">
           {report ? (
             <ScoresPage report={report} />

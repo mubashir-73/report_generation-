@@ -151,10 +151,44 @@ function ScoresPage({ report }) {
       // Add student details - adjusted starting position
       const startY = 50; // Increased to provide more space after the header
       doc.setFontSize(12);
+
+      // Calculate text width for proper spacing
+      const getTextWidth = (text) => {
+        return doc.getTextWidth(text);
+      };
+
+      // Register Number
+      doc.setFont("helvetica", "bold");
+      const regLabel = "Register Number:";
+      doc.text(regLabel, 14, startY);
       doc.setFont("helvetica", "normal");
-      doc.text(`Register Number: ${aptitudeScores.registerNo}`, 14, startY);
-      doc.text(`Name: ${aptitudeScores.name}`, 14, startY + 7);
-      doc.text(`Department: ${aptitudeScores.department}`, 14, startY + 14);
+      doc.text(
+        aptitudeScores.registerNo,
+        14 + getTextWidth(regLabel) + 4,
+        startY
+      );
+
+      // Name
+      doc.setFont("helvetica", "bold");
+      const nameLabel = "Name:";
+      doc.text(nameLabel, 14, startY + 7);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        aptitudeScores.name,
+        14 + getTextWidth(nameLabel) + 2,
+        startY + 7
+      );
+
+      // Department
+      doc.setFont("helvetica", "bold");
+      const deptLabel = "Department:";
+      doc.text(deptLabel, 14, startY + 14);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        aptitudeScores.department,
+        14 + getTextWidth(deptLabel) + 3,
+        startY + 14
+      );
 
       // Aptitude Table
       doc.setFontSize(14);
@@ -176,16 +210,33 @@ function ScoresPage({ report }) {
         ],
         body: [
           [
-            report[1]?.core === -1 ? "" : report[1]?.core,
-            report[1]?.verbal === -1 ? "" : report[1]?.verbal,
-            report[1]?.aptitude === -1 ? "" : report[1]?.aptitude,
-            report[1]?.programming === -1 ? "" : report[1]?.programming,
-            report[1]?.comprehension === -1 ? "" : report[1]?.comprehension,
+            report[1]?.core === -1 ? " " : report[1]?.core,
+            report[1]?.verbal === -1 ? " " : report[1]?.verbal,
+            report[1]?.aptitude === -1 ? " " : report[1]?.aptitude,
+            report[1]?.programming === -1 ? " " : report[1]?.programming,
+            report[1]?.comprehension === -1 ? " " : report[1]?.comprehension,
             report[1]?.points === -1 ? "Absent" : `${report[1]?.points}/50`,
           ],
         ],
         theme: "grid",
-        headStyles: { fillColor: [30, 65, 160], textColor: 255 },
+        headStyles: {
+          fillColor: [30, 65, 160],
+          textColor: 255,
+          halign: "center",
+          valign: "middle",
+        },
+        bodyStyles: {
+          halign: "center",
+          valign: "middle",
+        },
+        columnStyles: {
+          0: { cellWidth: 30 },
+          1: { cellWidth: 30 },
+          2: { cellWidth: 30 },
+          3: { cellWidth: 30 },
+          4: { cellWidth: 30 },
+          5: { cellWidth: 30 },
+        },
       });
 
       // Get the last Y position
@@ -227,7 +278,24 @@ function ScoresPage({ report }) {
           ],
         ],
         theme: "grid",
-        headStyles: { fillColor: [30, 65, 160], textColor: 255 },
+        headStyles: {
+          fillColor: [30, 65, 160],
+          textColor: 255,
+          halign: "center",
+          valign: "middle",
+        },
+        bodyStyles: {
+          halign: "center",
+          valign: "middle",
+        },
+        columnStyles: {
+          0: { cellWidth: 30 },
+          1: { cellWidth: 30 },
+          2: { cellWidth: 30 },
+          3: { cellWidth: 30 },
+          4: { cellWidth: 30 },
+          5: { cellWidth: 30 },
+        },
       });
 
       // Save the PDF
@@ -241,7 +309,7 @@ function ScoresPage({ report }) {
   };
 
   return (
-    <div className="flex flex-col gap-10 w-full items-center pb-8 bg-blue-50">
+    <div className="flex flex-col gap-10 w-full items-center pb-8 bg-blue-50 mt-[72px]">
       {/* PDF Content */}
       <div className="p-6 w-full max-w-10xl rounded-lg bg-white shadow-md">
         {/* Header */}
@@ -288,12 +356,12 @@ function ScoresPage({ report }) {
             <Tbody>
               <Tr>
                 {[
-                  report[1]?.core === -1 ? "" : report[1]?.core,
-                  report[1]?.verbal === -1 ? "" : report[1]?.verbal,
-                  report[1]?.aptitude === -1 ? "" : report[1]?.aptitude,
-                  report[1]?.programming === -1 ? "" : report[1]?.programming,
+                  report[1]?.core === -1 ? " " : report[1]?.core,
+                  report[1]?.verbal === -1 ? " " : report[1]?.verbal,
+                  report[1]?.aptitude === -1 ? " " : report[1]?.aptitude,
+                  report[1]?.programming === -1 ? " " : report[1]?.programming,
                   report[1]?.comprehension === -1
-                    ? ""
+                    ? " "
                     : report[1]?.comprehension,
                   report[1]?.points === -1
                     ? "Absent"
