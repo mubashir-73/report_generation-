@@ -210,9 +210,9 @@ function ScoresPage({ report }) {
         ],
         body: [
           [
+            report[1]?.aptitude === -1 ? " " : report[1]?.aptitude,
             report[1]?.core === -1 ? " " : report[1]?.core,
             report[1]?.verbal === -1 ? " " : report[1]?.verbal,
-            report[1]?.aptitude === -1 ? " " : report[1]?.aptitude,
             report[1]?.programming === -1 ? " " : report[1]?.programming,
             report[1]?.comprehension === -1 ? " " : report[1]?.comprehension,
             report[1]?.points === -1 ? "Absent" : `${report[1]?.points}/50`,
@@ -253,9 +253,9 @@ function ScoresPage({ report }) {
           [
             "Subject Knowledge",
             "Communication Skills",
+            "Active Participation",
             "Body Language",
             "Listening Skills",
-            "Active Participation",
             "Total",
           ],
         ],
